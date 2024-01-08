@@ -1,1 +1,1 @@
-# FSO
+# FullStack Open
