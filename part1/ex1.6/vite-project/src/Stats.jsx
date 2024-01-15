@@ -1,6 +1,14 @@
 const Stats = ({ good, bad, neutral }) => {
   const total = good + bad + neutral;
   const average = (good - bad) / total;
+  if (good === 0 && bad === 0 && neutral == 0) {
+    return (
+      <div>
+        <span>Statistics</span>
+        <p>no feedback given yet</p>
+      </div>
+    );
+  }
   return (
     <div>
       <span>Statistics</span>
