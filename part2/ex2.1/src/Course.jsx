@@ -12,12 +12,18 @@ const Part = ({ part }) => {
 };
 
 const Content = ({ parts }) => {
-  console.log(parts);
+  const total = parts.reduce((s, p) => s + p.exercises, 0);
+
   const content = parts.map((p) => {
     return <Part key={p.id} part={p} />;
   });
-  console.log(content);
-  return <div>{content}</div>;
+
+  return (
+    <>
+      <div>{content}</div>
+      <div>Total of {total} exercises</div>
+    </>
+  );
 };
 
 const Course = ({ course }) => {
