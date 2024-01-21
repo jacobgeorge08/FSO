@@ -1,5 +1,5 @@
 const Header = ({ courseName }) => {
-  return <h1>{courseName}</h1>;
+  return <h2>{courseName}</h2>;
 };
 
 const Part = ({ part }) => {
@@ -21,18 +21,21 @@ const Content = ({ parts }) => {
   return (
     <>
       <div>{content}</div>
-      <div>Total of {total} exercises</div>
+      <h4>Total of {total} exercises</h4>
     </>
   );
 };
 
-const Course = ({ course }) => {
-  return (
-    <>
-      <Header courseName={course.name} />
-      <Content parts={course.parts} />
-    </>
-  );
+const Course = ({ courses }) => {
+  const mappedCourses = courses.map((c) => {
+    return (
+      <div key={c.id}>
+        <Header courseName={c.name} />
+        <Content parts={c.parts} />
+      </div>
+    );
+  });
+  return <div>{mappedCourses}</div>;
 };
 
 export default Course;
