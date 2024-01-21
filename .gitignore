@@ -4,3 +4,10 @@ part1/ex1.1/vite.config.js
 part1/ex1.1/package.json
 part1/ex1.1/package-lock.json
 part1/ex1.1/.eslintrc.cjs
+part2/ex2.1/.eslintrc.cjs
+part2/ex2.1/.gitignore
+part2/ex2.1/package.json
+part2/ex2.1/README.md
+part2/ex2.1/vite.config.js
+part2/ex2.1/public/vite.svg
+part2/ex2.1/package-lock.json
