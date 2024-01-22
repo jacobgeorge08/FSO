@@ -11,3 +11,9 @@ part2/ex2.1/README.md
 part2/ex2.1/vite.config.js
 part2/ex2.1/public/vite.svg
 part2/ex2.1/package-lock.json
+part2/ex2.6/.eslintrc.cjs
+part2/ex2.6/.gitignore
+part2/ex2.6/package-lock.json
+part2/ex2.6/package.json
+part2/ex2.6/vite.config.js
+part2/ex2.6/public/vite.svg
