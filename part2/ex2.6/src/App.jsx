@@ -13,9 +13,10 @@ const App = () => {
 
   const hook = () => {
     personService.getAll().then((initialPersons) => setPersons(initialPersons));
+    console.log("rendered");
   };
 
-  useEffect(hook, [persons]);
+  useEffect(hook, []);
 
   const handleDelete = (id) => {
     const deleteName = persons.find((p) => p.id === id).name;
@@ -24,6 +25,7 @@ const App = () => {
     } else {
       console.log(`delete cancelled`);
     }
+    setPersons(persons.filter((p) => p.id !== id));
   };
 
   const handleNameChange = (event) => {
@@ -43,7 +45,13 @@ const App = () => {
 
     if (found) {
       if (window.confirm("Are you sure you want to edit " + found.name + "?")) {
-        personService.updatePerson({ ...found, number: newNumber }, found.id);
+        const editedPerson = { ...found, number: newNumber };
+
+        personService.updatePerson(editedPerson, editedPerson.id);
+
+        setPersons(
+          persons.map((p) => (p.id === editedPerson.id ? editedPerson : p))
+        );
       } else {
         console.log(`Update cancelled`);
       }
@@ -51,7 +59,7 @@ const App = () => {
       const newPerson = {
         name: newName,
         number: newNumber,
-        id: String(persons.length + 1),
+        id: String(Math.floor(Math.random() * 100000)),
       };
 
       personService
