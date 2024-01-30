@@ -4,12 +4,26 @@ import Persons from "./Persons";
 import Filter from "./Filter";
 import personService from "./services/persons";
 import { useEffect } from "react";
+import "./styles.css";
 
+const Notification = ({ message, deleteContact }) => {
+  if (message === null) {
+    return null;
+  } else {
+    return (
+      <div className={deleteContact === false ? "notification" : "deleteNoti"}>
+        {message}
+      </div>
+    );
+  }
+};
 const App = () => {
   const [persons, setPersons] = useState([]);
   const [newName, setNewName] = useState("");
   const [newNumber, setNewNumber] = useState("");
   const [search, setSearch] = useState("");
+  const [notification, setNotification] = useState(null);
+  const [deleteContact, setDeleteContact] = useState(false);
 
   const hook = () => {
     personService.getAll().then((initialPersons) => setPersons(initialPersons));
@@ -22,10 +36,10 @@ const App = () => {
     const deleteName = persons.find((p) => p.id === id).name;
     if (window.confirm("Are you sure you want to delete " + deleteName + "?")) {
       personService.deletePerson(id);
+      setPersons(persons.filter((p) => p.id !== id));
     } else {
       console.log(`delete cancelled`);
     }
-    setPersons(persons.filter((p) => p.id !== id));
   };
 
   const handleNameChange = (event) => {
@@ -47,7 +61,26 @@ const App = () => {
       if (window.confirm("Are you sure you want to edit " + found.name + "?")) {
         const editedPerson = { ...found, number: newNumber };
 
-        personService.updatePerson(editedPerson, editedPerson.id);
+        personService
+          .updatePerson(editedPerson, editedPerson.id)
+          .then(() => {
+            setNotification(`${editedPerson.name}'s number was edited`);
+            setTimeout(() => {
+              setNotification(null);
+            }, 5000);
+          })
+          .catch((error) => {
+            console.log(error);
+            setDeleteContact(true);
+            setNotification(
+              `${editedPerson.name} was already deleted from the database`
+            );
+            setTimeout(() => {
+              setNotification(null);
+              setDeleteContact(false);
+            }, 5000);
+            setPersons(persons.filter((p) => p.id !== editedPerson.id));
+          });
 
         setPersons(
           persons.map((p) => (p.id === editedPerson.id ? editedPerson : p))
@@ -64,7 +97,13 @@ const App = () => {
 
       personService
         .createPerson(newPerson)
-        .then((response) => setPersons(persons.concat(response)));
+        .then((response) => setPersons(persons.concat(response)))
+        .then(() => {
+          setNotification(`${newPerson.name}'s number was added`);
+          setTimeout(() => {
+            setNotification(null);
+          }, 5000);
+        });
     }
 
     setNewName("");
@@ -77,6 +116,7 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={notification} deleteContact={deleteContact} />
       <Filter text="filter shown with : " handleFilter={handleFilter} />
       <h3>Add a new</h3>
       <PersonForm

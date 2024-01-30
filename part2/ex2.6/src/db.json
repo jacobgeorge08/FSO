@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "id": "47144",
-      "name": "Siddu",
-      "number": "89711"
-    },
-    {
       "id": "73050",
       "name": "Richard Hamming",
       "number": "0092"
@@ -18,17 +13,12 @@
     {
       "id": "78891",
       "name": "Arnav",
-      "number": "003"
+      "number": "234789"
     },
     {
       "id": "9726",
       "name": "Jacob",
       "number": "004"
-    },
-    {
-      "id": "17015",
-      "name": "Jacob004",
-      "number": "001"
     }
   ]
 }
